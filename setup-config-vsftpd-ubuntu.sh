@@ -16,6 +16,11 @@ mkdir -p /home/vsftpd/empty
 mkdir -p /home/james/ftp/ftp_shared
 
 
+chmod g+rwx /home/james/ftp/ftp_shared
+chmod o+r /home/james/ftp/ftp_shared
+chown james /home/james/ftp/ftp_shared
+
+
 # restart vsftpd
 systemctl enable vsftpd
 systemctl restart vsftpd
@@ -44,14 +49,14 @@ journalctl --since "5 minutes  ago"
 ### Configuring firewall
 ##You need to add the port and service to firewall
 # To add port 20
-firewall-cmd --zone=public --add-port=20/tcp
-firewall-cmd --add-service=ftp
+ufw status
+sudo ufw allow 20/tcp
+sudo ufw allow 21/tcp
+sudo ufw allow 990/tcp
+sudo ufw allow 40000:50000/tcp
+sudo ufw status
 
-firewall-cmd --permanent --zone=public --add-port=20/tcp
-firewall-cmd ---permanent -add-service=ftp
-firewall-cmd --list-all
 
-#If you want it to be permanent then add "--permanent" to first two command
 
 
 
